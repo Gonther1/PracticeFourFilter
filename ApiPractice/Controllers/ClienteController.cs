@@ -72,4 +72,14 @@ public class ClienteController : ControllerBase
         return _mapper.Map<List<ClientesConPagos>>(entity);
     }
 
+    // 1.4.5) 10
+    [HttpGet("ClienteEntregaTardia")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ClientesConPagos>>> ClientsWithoutPays()
+    {
+        var entity = await _unitOfWork.Clientes.GetClientsWithoutPays();
+        return _mapper.Map<List<ClientesConPagos>>(entity);
+    }
+
 }

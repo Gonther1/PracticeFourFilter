@@ -13,5 +13,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<ClienteYRepresentante>> GetClientAndSalesRepresentant(); 
         Task<IEnumerable<ClientesConPagos>> GetClientsWithPays(); 
         Task<IEnumerable<ClientesConPagos>> GetClientsWithoutPays(); 
+        Task<IEnumerable<ClientePedidoTarde>> ClientsWithLateDelivery(); 
     }
 }
