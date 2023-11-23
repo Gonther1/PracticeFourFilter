@@ -20,12 +20,26 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<Oficina>> OfficeCodeAndCity()
         {
-            return await (from cli in _context.Oficinas
+            return await (from of in _context.Oficinas
                          select new Oficina 
                          {
-                            CodigoOficina = cli.CodigoOficina,
-                            Ciudad = cli.Ciudad
+                            CodigoOficina = of.CodigoOficina,
+                            Ciudad = of.Ciudad
                          }
+            ).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Oficina>> OfficesFromSpain()
+        {
+            return await (from of in _context.Oficinas
+                          where of.Pais == "España"
+                          select new Oficina
+                          {
+                            CodigoOficina = of.CodigoOficina,
+                            Pais = of.Pais,
+                            Ciudad = of.Ciudad,
+                            Telefono = of.Telefono
+                          }
             ).ToListAsync();
         }
     }

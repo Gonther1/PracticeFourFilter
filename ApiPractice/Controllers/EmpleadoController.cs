@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiPractice.Dtos;
@@ -8,15 +7,14 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ApiPractice.Controllers;
 
-public class OficinaController : BaseController
+public class EmpleadoController : BaseController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public OficinaController(IUnitOfWork unitOfWork, IMapper mapper)
+    public EmpleadoController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -24,44 +22,44 @@ public class OficinaController : BaseController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<Oficina>>> Get()
+    public async Task<ActionResult<IEnumerable<Empleado>>> Get()
     {
-        var entity = await _unitOfWork.Oficinas.GetAllAsync();
-        return _mapper.Map<List<Oficina>>(entity);
+        var entity = await _unitOfWork.Empleados.GetAllAsync();
+        return _mapper.Map<List<Empleado>>(entity);
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Oficina>> Get(string id)
+    public async Task<ActionResult<Empleado>> Get(int id)
     {
-        var entity = await _unitOfWork.Oficinas.GetByIdAsync(id);
+        var entity = await _unitOfWork.Empleados.GetByIdAsync(id);
         if (entity == null)
         {
             return NotFound();
         }
-        return _mapper.Map<Oficina>(entity);
+        return _mapper.Map<Empleado>(entity);
     }
 
-    // 1
-
-    [HttpGet("OfficesAndCities")]
+    // 3
+    [HttpGet("EmpleadoJefe7")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<OficinaDto>>> OfficesAndCities()
+    public async Task<ActionResult<IEnumerable<EmpleadoIdJefe7>>> EmpleadoJefe7()
     {
-        var entity = await _unitOfWork.Oficinas.OfficeCodeAndCity();
-        return _mapper.Map<List<OficinaDto>>(entity);
+        var entity = await _unitOfWork.Empleados.EmployeeWithBossCode7();
+        return _mapper.Map<List<EmpleadoIdJefe7>>(entity);
     }
 
-    // 2
-    [HttpGet("OfficesSpain")]
+    // 4
+
+    [HttpGet("DirectorGeneral")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<OficinasDeEspañaDto>>> OfficesSpain()
+    public async Task<ActionResult<EmpleadoJefeDto>> DirectorGeneral()
     {
-        var entity = await _unitOfWork.Oficinas.OfficesFromSpain();
-        return _mapper.Map<List<OficinasDeEspañaDto>>(entity);
+        var entity = await _unitOfWork.Empleados.GetBoss();
+        return _mapper.Map<EmpleadoJefeDto>(entity);
     }
 }

@@ -14,6 +14,12 @@ namespace ApiPractice.Profiles
         {
             CreateMap<Oficina, OficinaDto>()
             .ReverseMap();  
+            CreateMap<Oficina, OficinasDeEspañaDto>()
+            .ReverseMap();  
+            CreateMap<Empleado, EmpleadoIdJefe7>()
+            .ReverseMap();  
+            CreateMap<Empleado, EmpleadoJefeDto>()
+            .ReverseMap();  
         }
     }
 }
